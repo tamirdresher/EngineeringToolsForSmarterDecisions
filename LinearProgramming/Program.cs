@@ -21,10 +21,10 @@ double cuPerSmall = 50;
 double cuPerMedium = 150;
 double cuPerLarge = 300;
 
-double latencyCriticalityFactor = 1.5; //used in order to virtually increase latency for critical regions so it will demand more resources
+double latencyCriticalityFactor = 0.8; //used in order to virtually increase latency for critical regions so it will demand more resources
 
 // Latency and capacity constraints
-double maxLatency = 25.0;  // Maximum allowed latency
+double maxLatency = 30.0;  // Maximum allowed latency
 double minCUPerRegion = 1000.0;  // Minimum CU required in each region
 
 // Define regions
@@ -44,7 +44,6 @@ foreach (var region in regions)
     region.LargeInstances = solver.MakeIntVar(0.0, double.PositiveInfinity, $"large_{region.Name}");
 }
 
-
 // Traffic routing variables (percentage of traffic routed between regions).
 foreach (var srcRegion in regions)
 {
@@ -54,9 +53,7 @@ foreach (var srcRegion in regions)
     }
 }
 
-
 // Add constraints.
-
 // Constraint 1: Traffic routed from each region must sum to 1.
 foreach (var srcRegion in regions)
 {
